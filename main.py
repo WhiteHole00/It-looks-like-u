@@ -10,6 +10,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager as CM
 from selenium.webdriver.support.ui import Select
+
+
 def isCheckDB():
     try:
             con = sqlite3.connect("./db/db.db")
@@ -20,10 +22,12 @@ def isCheckDB():
             if check == None:
                 print("계정 등록이 되어 있지 않습니다. 3초뒤 계정 등록 절차로 이동합니다.")
                 sleep(3)
+                os.system("cls")
                 database.SaveAccount() #db 에 패이스북 계정 등록
             else:
                 print("계정이 정상적으로 등록 되어있습니다.\n3초뒤 페메 도배 페이지로 이동 합니다.")
                 sleep(3)
+                os.system("cls")
                 main()
     except Exception as e:
         return print("오류 발생")
@@ -58,7 +62,12 @@ def MessengerSpam(content,cnt):
 
             WebDriverWait(client, 70).until(EC.presence_of_element_located(( By.XPATH, '/html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button'))).click()
 
-            print(f"Login as {user}")
+
+            sleep(2) 
+
+            username = WebDriverWait(client, 70).until(EC.presence_of_element_located(( By.XPATH, '/html/body/div[1]/div/div[1]/div/div[3]/div[3]/div/div[1]/div/div[1]/div/div/div[1]/div/div/div[2]/span/div/a/div[3]/span/span')))
+
+            print(f"Login as {username.text}")
 
             sleep(3)
 
@@ -68,6 +77,7 @@ def MessengerSpam(content,cnt):
             sleep(3)
 
             for i in range(1,cnt+1):
+                sleep(1)
                 people = WebDriverWait(client, 70).until(EC.presence_of_element_located(( By.XPATH, f'//*[@id="jsc_c_w"]/div/div/div/div/div[2]/div/div[{i}]/div')))
                 people.click()
 
